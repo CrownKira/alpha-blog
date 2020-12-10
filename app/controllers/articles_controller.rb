@@ -1,6 +1,8 @@
 class ArticlesController < ApplicationController
+    before_action :set_article, only: [:show, :edit, :update, :destroy] #runs set article before running this action
+
     def show
-        @article = Article.find(params[:id]) #convert to instance variable
+         #convert to instance variable
     end
 
     def index
@@ -12,13 +14,13 @@ class ArticlesController < ApplicationController
     end
 
     def edit
-        @article = Article.find(params[:id])
+        
     end
 
     def create
         # ActionController::Parameters
         # render plain: params[:article].class #{"title"=>"test", "description"=>"testing"}
-        @article = Article.new(params.require(:article).permit(:title, :description)) #require top level key of article
+        @article = Article.new(article_params) #require top level key of article
         # permit title and description to be used to create the object
         if @article.save
             flash[:notice] = "Article was created successfully."
@@ -29,8 +31,7 @@ class ArticlesController < ApplicationController
     end
 
     def update
-        @article = Article.find(params[:id])
-        if @article.update(params.require(:article).permit(:title, :description))
+        if @article.update(article_params)
             flash[:notice] = "Article was updated successfully"
             redirect_to @article
         else
@@ -38,4 +39,17 @@ class ArticlesController < ApplicationController
         end
     end
 
+    def destroy
+        @article.destroy
+        redirect_to articles_path
+    end
+
+    private
+    def set_article
+        @article = Article.find(params[:id])
+    end
+
+    def article_params
+        params.require(:article).permit(:title, :description)
+    end
 end
