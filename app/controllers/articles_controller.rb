@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
         # ActionController::Parameters
         # render plain: params[:article].class #{"title"=>"test", "description"=>"testing"}
         @article = Article.new(article_params) #require top level key of article
+        @article = User.first
         # permit title and description to be used to create the object
         if @article.save
             flash[:notice] = "Article was created successfully."
