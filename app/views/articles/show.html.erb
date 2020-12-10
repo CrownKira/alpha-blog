@@ -1,11 +1,10 @@
-  
 <h1 class="text-center mt-4"><%= @article.title %></h1>
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-8 mt-4">
       <div class="card text-center shadow">
         <div class="card-header font-italic">
-          by Kyle Toh 
+          by <%= @article.user.username %>
         </div>
         <div class="card-body">
           <div class="card-text text-left"><%= simple_format(@article.description) %></div>
